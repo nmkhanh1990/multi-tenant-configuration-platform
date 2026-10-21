@@ -1,0 +1,19 @@
+{
+  "name": "multi-tenant-configuration-platform",
+  "private": true,
+  "packageManager": "pnpm@11.1.2",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "pnpm -r --if-present build",
+    "check": "pnpm --filter @mtcp/shared build && pnpm -r --if-present check",
+    "test": "pnpm -r --if-present test",
+    "dev": "pnpm --filter @mtcp/shared build && pnpm --parallel --filter @mtcp/api --filter @mtcp/web dev"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

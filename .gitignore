@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.svelte-kit/
+build/
+coverage/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+.env
+.env.*
+!.env.example
