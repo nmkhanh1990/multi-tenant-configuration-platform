@@ -1,0 +1,5 @@
+{
+  "name": "multi-tenant-configuration-platform",
+  "compatibility_date": "2026-10-22",
+  "pages_build_output_dir": ".svelte-kit/cloudflare"
+}

@@ -156,3 +156,61 @@ amounts strictly below the threshold are auto-approved. Business-day deadlines
 skip Saturdays and Sundays.
 
 Run workspace checks and tests with `pnpm check`, `pnpm test`, and `pnpm build`.
+
+## Free demo deployment
+
+The demo deployment uses Cloudflare Pages for the SvelteKit admin UI and a
+Render Free Web Service for the Express API. It is intended for evaluation and
+sample data only, not production use. Deploy the Pages site once first to get
+its assigned origin, create the Render service with that origin in CORS, then
+set the Pages API URL and redeploy the UI.
+
+### Deploy the admin UI (first pass)
+
+1. In Cloudflare Pages, import this GitHub repository with the SvelteKit preset.
+2. Set the root directory to `apps/web` and configure:
+   - Build command: `pnpm install --frozen-lockfile && pnpm --filter @mtcp/shared build && pnpm --filter @mtcp/web build`
+   - Build output directory: `.svelte-kit/cloudflare`
+   - `NODE_VERSION`: `22.22.0`
+3. Deploy once to get the assigned Pages origin. The API connection will
+   remain unavailable until the API is deployed and the UI is connected below.
+
+### Deploy the API
+
+1. In Render, create a Blueprint from this repository and select `render.yaml`.
+2. Set `CORS_ORIGINS` to the exact public Cloudflare Pages origin
+   (for example, `https://<project>.pages.dev`).
+3. Deploy and wait for `https://<api-service>.onrender.com/health` to return
+   `{"status":"ok"}`. The API base URL is
+   `https://<api-service>.onrender.com/api`.
+
+### Connect and verify
+
+1. Set `VITE_API_BASE_URL` to
+   `https://<api-service>.onrender.com/api` in Cloudflare Pages and redeploy.
+2. Open the Pages URL directly and test `/tenants/create` and a tenant detail
+   URL to verify deep links are served.
+
+**Live admin UI:** add the assigned Pages URL here after deployment and public
+smoke testing. Do not substitute a placeholder for the actual URL.
+
+The API uses `/tmp/platform.sqlite`. [Render Free services](https://render.com/docs/free)
+have an ephemeral filesystem, spin down after 15 minutes without traffic, and
+may take about a minute to wake. Tenant changes and version history can be lost
+on spin-down, restart, or redeploy; the API seeds the sample tenants again when
+it starts with an empty database. Do not use this deployment for production or
+real personal data.
+
+### Demo script
+
+1. Open **Tenants** and select **Add tenant**.
+2. Enter the company name and review the generated tenant ID; complete each
+   configuration step and create the tenant.
+3. Open **Claim preview**, choose the new tenant, enter a sample claim, and run
+   the preview. Compare its routing, documents, notifications, and SLA against
+   one of the seeded tenants.
+4. Open **Compare tenants**, select two tenants, and review the configuration
+   differences.
+
+Changes made in the public demo are temporary and may be visible to other
+visitors until the free API service restarts or spins down.
