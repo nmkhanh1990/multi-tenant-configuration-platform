@@ -153,6 +153,7 @@ export function processClaim(tenant: Tenant, input: unknown): ClaimProcessingRes
   const events: NotificationEvent[] = autoApproved
     ? ["claim_submitted", "approved"]
     : ["claim_submitted"];
+    
   const notifications = events.flatMap((event) => {
     const configuration = tenant.config.notifications[event];
     if (!configuration || configuration.channels.length === 0) {

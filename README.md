@@ -215,3 +215,9 @@ real personal data.
 
 Changes made in the public demo are temporary and may be visible to other
 visitors until the free API service restarts or spins down.
+
+## Project documentation
+
+- [Implementation plan and status](docs/plan.md)
+- [Deployment process and operations](docs/deploy.md)
+- [Tenant administration and claim workflow guide](docs/guide.md)
