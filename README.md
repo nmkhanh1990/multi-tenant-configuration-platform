@@ -191,8 +191,9 @@ set the Pages API URL and redeploy the UI.
 2. Open the Pages URL directly and test `/tenants/create` and a tenant detail
    URL to verify deep links are served.
 
-**Live admin UI:** add the assigned Pages URL here after deployment and public
-smoke testing. Do not substitute a placeholder for the actual URL.
+**Live admin UI:** https://multi-tenant-configuration-platform.pages.dev/
+
+**API health:** https://multi-tenant-configuration-api.onrender.com/health
 
 The API uses `/tmp/platform.sqlite`. [Render Free services](https://render.com/docs/free)
 have an ephemeral filesystem, spin down after 15 minutes without traffic, and
